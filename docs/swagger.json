@@ -1,0 +1,94 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Swagger API for Golang Project Covid active cases tracker.",
+        "title": "Covid active cases tracker",
+        "contact": {
+            "name": "Arjun Rajpal",
+            "email": "rajpal.arjun@yahoo.cin"
+        },
+        "version": "1.0"
+    },
+    "basePath": "/",
+    "paths": {
+        "/api/v1/getActiveCases": {
+            "get": {
+                "description": "Takes in the lat/lng of the user and returns the total active cases of that state along with the total active cases of the entire country",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "type": "number",
+                        "format": "float",
+                        "description": "latitude",
+                        "name": "lat",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "number",
+                        "format": "float",
+                        "description": "longitude",
+                        "name": "lng",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/resource.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/resource.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/resource.Response"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "resource.Response": {
+            "type": "object",
+            "properties": {
+                "activeCovidCases": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/service.ActiveCovidCasesResponse"
+                    }
+                },
+                "error": {
+                    "type": "string"
+                }
+            }
+        },
+        "service.ActiveCovidCasesResponse": {
+            "type": "object",
+            "properties": {
+                "lastUpdated": {
+                    "type": "string"
+                },
+                "state": {
+                    "type": "string"
+                },
+                "totalCases": {
+                    "type": "integer"
+                }
+            }
+        }
+    }
+}

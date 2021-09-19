@@ -1,0 +1,63 @@
+basePath: /
+definitions:
+  resource.Response:
+    properties:
+      activeCovidCases:
+        items:
+          $ref: '#/definitions/service.ActiveCovidCasesResponse'
+        type: array
+      error:
+        type: string
+    type: object
+  service.ActiveCovidCasesResponse:
+    properties:
+      lastUpdated:
+        type: string
+      state:
+        type: string
+      totalCases:
+        type: integer
+    type: object
+info:
+  contact:
+    email: rajpal.arjun@yahoo.cin
+    name: Arjun Rajpal
+  description: Swagger API for Golang Project Covid active cases tracker.
+  title: Covid active cases tracker
+  version: "1.0"
+paths:
+  /api/v1/getActiveCases:
+    get:
+      consumes:
+      - application/json
+      description: Takes in the lat/lng of the user and returns the total active cases
+        of that state along with the total active cases of the entire country
+      parameters:
+      - description: latitude
+        format: float
+        in: query
+        name: lat
+        required: true
+        type: number
+      - description: longitude
+        format: float
+        in: query
+        name: lng
+        required: true
+        type: number
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/resource.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/resource.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/resource.Response'
+swagger: "2.0"
