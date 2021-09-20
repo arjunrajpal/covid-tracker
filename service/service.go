@@ -127,7 +127,7 @@ func GetCovidDetails(c echo.Context, state string) (error, []dao.StateWiseCovidC
 // Cron job to refresh data in Mongo every 1 hr
 func createCronJob() {
 	c := cron.New()
-	c.AddFunc("@every 60m", func() {
+	c.AddFunc("@hourly", func() {
 		log.Println("Every 1 hr job\n")
 		totalActiveCases, stateWiseCovidCasesList := fetchCovidData()
 
